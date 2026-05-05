@@ -1,0 +1,76 @@
+# Secrets / env
+.env
+.env.local
+*.env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+reminders.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# APScheduler jobstore (agar SQLAlchemyJobStore ishlatilsa)
+jobs.sqlite

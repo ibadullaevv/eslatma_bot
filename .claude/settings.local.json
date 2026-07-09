@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir C:UsersIbadullayevPycharmProjectseslatma_bot *)"
+      "Bash(dir C:UsersIbadullayevPycharmProjectseslatma_bot *)",
+      "Bash(python -m py_compile main.py db.py scheduler.py)"
     ]
   }
 }

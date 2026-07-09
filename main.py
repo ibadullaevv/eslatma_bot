@@ -35,13 +35,14 @@ class ReminderStates(StatesGroup):
 async def cmd_start(message: Message, state: FSMContext) -> None:
     await state.clear()
     await message.answer(
-        "Assalomu alaykum! Menga ovozli xabar yuboring, men uni belgilangan vaqtda esingizga solaman."
+        "Assalomu alaykum! Menga ovozli xabar yoki matn yuboring, "
+        "men uni belgilangan vaqtda esingizga solaman."
     )
 
 
 @dp.message(F.voice)
 async def handle_voice(message: Message, state: FSMContext) -> None:
-    await state.update_data(voice_file_id=message.voice.file_id)
+    await state.update_data(content=message.voice.file_id, content_type="voice")
     await state.set_state(ReminderStates.waiting_for_time)
     await message.answer(
         "Ovozli xabar qabul qilindi. Qachon eslatishim kerak? "
@@ -67,15 +68,18 @@ async def handle_time(message: Message, state: FSMContext) -> None:
         return
 
     data = await state.get_data()
-    voice_file_id = data.get("voice_file_id")
-    if not voice_file_id:
+    content = data.get("content")
+    content_type = data.get("content_type", "voice")
+    if not content:
         await state.clear()
         await message.answer(
-            "Avval ovozli xabar yuboring."
+            "Avval ovozli xabar yoki matn yuboring."
         )
         return
 
-    reminder_id = await add_reminder(message.from_user.id, voice_file_id, reminder_time)
+    reminder_id = await add_reminder(
+        message.from_user.id, content, reminder_time, content_type
+    )
     schedule_reminder(bot, reminder_id, reminder_time)
     await state.clear()
     await message.answer(
@@ -91,9 +95,12 @@ async def handle_time_wrong_type(message: Message) -> None:
 
 
 @dp.message(F.text)
-async def handle_other_text(message: Message) -> None:
+async def handle_text(message: Message, state: FSMContext) -> None:
+    await state.update_data(content=message.text, content_type="text")
+    await state.set_state(ReminderStates.waiting_for_time)
     await message.answer(
-        "Menga ovozli xabar yuboring, men uni belgilangan vaqtda esingizga solaman."
+        "Matn qabul qilindi. Qachon eslatishim kerak? "
+        "(Format: DD.MM.YYYY HH:mm, masalan: 05.05.2026 15:30)"
     )
 
 

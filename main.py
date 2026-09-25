@@ -57,13 +57,13 @@ async def handle_time(message: Message, state: FSMContext) -> None:
         reminder_time = datetime.strptime(text, DATE_FORMAT)
     except ValueError:
         await message.answer(
-            "Sana formati noto'g'ri. Iltimos, namunadagidek yozing: 05.05.2026 15:30"
+            "Sana formati noto'g'ri. Iltimos, faqat vaqtni namunadagidek yozing: 05.05.2026 15:30"
         )
         return
 
     if reminder_time <= datetime.now():
         await message.answer(
-            "Sana formati noto'g'ri. Iltimos, namunadagidek yozing: 05.05.2026 15:30"
+            "Ko'rsatilgan vaqt o'tib ketgan. Iltimos, kelajakdagi vaqtni kiriting."
         )
         return
 
@@ -90,7 +90,7 @@ async def handle_time(message: Message, state: FSMContext) -> None:
 @dp.message(ReminderStates.waiting_for_time)
 async def handle_time_wrong_type(message: Message) -> None:
     await message.answer(
-        "Sana formati noto'g'ri. Iltimos, namunadagidek yozing: 05.05.2026 15:30"
+        "Sana formati noto'g'ri. Iltimos, faqat vaqtni namunadagidek yozing: 05.05.2026 15:30"
     )
 
 
